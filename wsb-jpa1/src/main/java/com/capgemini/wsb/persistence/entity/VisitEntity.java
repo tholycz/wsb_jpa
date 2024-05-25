@@ -3,6 +3,7 @@ package com.capgemini.wsb.persistence.entity;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -25,10 +26,13 @@ public class 	VisitEntity {
 	@NonNull
 	private DoctorEntity doctor;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id")
 	@NonNull
 	private PatientEntity patient;
+
+	@OneToMany(mappedBy = "visit", orphanRemoval = true)
+	private List<MedicalTreatmentEntity> medicalTreatments;
 
 	public Long getId() {
 		return id;

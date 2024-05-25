@@ -33,12 +33,15 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
+	@Column(nullable = false)
+	private int age;
+
 	@JoinColumn(name = "address_id")
 	@OneToOne
 	@NonNull
-	private AddressEntity addressEntity;
+	private AddressEntity address;
 
-	@OneToMany
+	@OneToMany(mappedBy = "patient", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<VisitEntity> visits;
 
 	public Long getId() {
@@ -98,12 +101,12 @@ public class PatientEntity {
 	}
 
 	@NonNull
-	public AddressEntity getAddressEntity() {
-		return addressEntity;
+	public AddressEntity getAddress() {
+		return address;
 	}
 
-	public void setAddressEntity(@NonNull AddressEntity addressEntity) {
-		this.addressEntity = addressEntity;
+	public void setAddress(@NonNull AddressEntity addressEntity) {
+		this.address = addressEntity;
 	}
 
 	public List<VisitEntity> getVisits() {
@@ -112,5 +115,13 @@ public class PatientEntity {
 
 	public void setVisits(List<VisitEntity> visits) {
 		this.visits = visits;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 }
