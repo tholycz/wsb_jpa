@@ -1,13 +1,11 @@
 package com.capgemini.wsb.persistence.entity;
 
-import java.time.LocalDate;
+import org.springframework.lang.NonNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "PATIENT")
@@ -15,6 +13,7 @@ public class PatientEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "patient_id")
 	private Long id;
 
 	@Column(nullable = false)
@@ -33,6 +32,14 @@ public class PatientEntity {
 
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
+
+	@JoinColumn(name = "address_id")
+	@OneToOne
+	@NonNull
+	private AddressEntity addressEntity;
+
+	@OneToMany
+	private List<VisitEntity> visits;
 
 	public Long getId() {
 		return id;
@@ -90,4 +97,20 @@ public class PatientEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	@NonNull
+	public AddressEntity getAddressEntity() {
+		return addressEntity;
+	}
+
+	public void setAddressEntity(@NonNull AddressEntity addressEntity) {
+		this.addressEntity = addressEntity;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
 }

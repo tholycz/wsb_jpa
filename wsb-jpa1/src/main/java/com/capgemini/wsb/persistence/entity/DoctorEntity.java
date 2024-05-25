@@ -1,15 +1,10 @@
 package com.capgemini.wsb.persistence.entity;
 
 import com.capgemini.wsb.persistence.enums.Specialization;
+import org.springframework.lang.NonNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "DOCTOR")
@@ -17,6 +12,7 @@ public class DoctorEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "doctor_id")
 	private Long id;
 
 	@Column(nullable = false)
@@ -32,6 +28,14 @@ public class DoctorEntity {
 
 	@Column(nullable = false)
 	private String doctorNumber;
+
+	@JoinColumn(name = "address_id")
+	@OneToOne
+	@NonNull
+	private AddressEntity addressEntity;
+
+	@OneToMany
+	private List<VisitEntity> visits;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -93,4 +97,20 @@ public class DoctorEntity {
 		this.specialization = specialization;
 	}
 
+	@NonNull
+	public AddressEntity getAddressEntity() {
+		return addressEntity;
+	}
+
+	public void setAddressEntity(@NonNull AddressEntity addressEntity) {
+		this.addressEntity = addressEntity;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
 }

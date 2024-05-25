@@ -1,15 +1,9 @@
 package com.capgemini.wsb.persistence.entity;
 
 import com.capgemini.wsb.persistence.enums.TreatmentType;
+import org.springframework.lang.NonNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "MEDICAL_TREATMENT")
@@ -24,6 +18,11 @@ public class MedicalTreatmentEntity {
 
 	@Enumerated(EnumType.STRING)
 	private TreatmentType type;
+
+	@JoinColumn(name = "visit_id")
+	@ManyToOne
+	@NonNull
+	private VisitEntity visit;
 
 	public Long getId() {
 		return id;
@@ -49,4 +48,12 @@ public class MedicalTreatmentEntity {
 		this.type = type;
 	}
 
+	@NonNull
+	public VisitEntity getVisit() {
+		return visit;
+	}
+
+	public void setVisit(@NonNull VisitEntity visit) {
+		this.visit = visit;
+	}
 }

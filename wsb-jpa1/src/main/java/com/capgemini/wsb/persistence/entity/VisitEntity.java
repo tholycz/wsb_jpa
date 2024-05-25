@@ -1,26 +1,34 @@
 package com.capgemini.wsb.persistence.entity;
 
+import org.springframework.lang.NonNull;
+
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "VISIT")
-public class VisitEntity {
+public class 	VisitEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "visit_id")
 	private Long id;
 
 	private String description;
 
 	@Column(nullable = false)
 	private LocalDateTime time;
+
+	@ManyToOne
+	@JoinColumn(name = "doctor_id")
+	@NonNull
+	private DoctorEntity doctor;
+
+	@ManyToOne
+	@JoinColumn(name = "patient_id")
+	@NonNull
+	private PatientEntity patient;
 
 	public Long getId() {
 		return id;
@@ -46,4 +54,21 @@ public class VisitEntity {
 		this.time = time;
 	}
 
+	@NonNull
+	public DoctorEntity getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(@NonNull DoctorEntity doctor) {
+		this.doctor = doctor;
+	}
+
+	@NonNull
+	public PatientEntity getPatient() {
+		return patient;
+	}
+
+	public void setPatient(@NonNull PatientEntity patient) {
+		this.patient = patient;
+	}
 }
