@@ -1,6 +1,7 @@
 package com.capgemini.wsb.service;
 
 import com.capgemini.wsb.dto.PatientTO;
+import com.capgemini.wsb.dto.VisitTO;
 import com.capgemini.wsb.persistence.dao.DoctorDao;
 import com.capgemini.wsb.persistence.dao.VisitDao;
 import com.capgemini.wsb.persistence.entity.DoctorEntity;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class PatientServiceTest {
     private VisitDao visitDao;
 
     @Test
+    @Transactional
     public void testShouldRemovePatient() {
         // given
         PatientTO patientBefore = patientService.findById(1L);
@@ -78,7 +81,14 @@ public class PatientServiceTest {
         assertThat(patient.getTelephoneNumber()).isEqualTo("893849839");
         assertThat(patient.getAddress().getId()).isEqualTo(3);
         assertThat(patient.getAge()).isEqualTo(20);
+    }
 
-
+    @Test
+    public void testShouldFindVisitsByPatientId() {
+        ///given
+        //when
+        List<VisitTO> visits = patientService.findVisitsByPatientId(1L);
+        //then
+        assertThat(visits.size()).isEqualTo(2);
     }
 }

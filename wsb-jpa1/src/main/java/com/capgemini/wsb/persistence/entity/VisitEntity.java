@@ -75,4 +75,12 @@ public class 	VisitEntity {
 	public void setPatient(@NonNull PatientEntity patient) {
 		this.patient = patient;
 	}
+
+	public List<MedicalTreatmentEntity> getMedicalTreatments() {
+		return medicalTreatments;
+	}
+
+	public void setMedicalTreatments(List<MedicalTreatmentEntity> medicalTreatments) {
+		this.medicalTreatments = medicalTreatments;
+	}
 }
